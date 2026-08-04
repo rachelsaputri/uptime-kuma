@@ -5,7 +5,6 @@ WORKDIR /app
 
 # Copy package files
 COPY package*.json ./
-COPY npm-shrinkwrap.json ./
 
 # Install dependencies
 RUN npm ci && npm cache clean --force
