@@ -10,7 +10,7 @@ ENV UPTIME_KUMA_DATA_DIR=/app/data
 RUN mkdir -p /app/data && chown -R node:node /app
 COPY --chown=node:node . .
 
-RUN npm install --omit=dev --legacy-peer-deps && npm cache clean --force
+RUN npm install --legacy-peer-deps && npm cache clean --force
 RUN npm run build
 
 
