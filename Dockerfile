@@ -8,7 +8,7 @@ ENV NODE_ENV=production
 ENV UPTIME_KUMA_DATA_DIR=/app/data
 
 RUN mkdir -p /app/data && chown -R node:node /app
-RUN npm build
+RUN npm run build
 
 COPY --chown=node:node . .
 
