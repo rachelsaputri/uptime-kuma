@@ -3,24 +3,28 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Copy package files (hanya package.json dan package-lock.json jika ada)
+# Copy package files
 COPY package*.json ./
 
-# Install dependencies
-RUN npm ci && npm cache clean --force
+# Install SEMUA dependencies (termasuk devDependencies jika ada proses build)
+RUN npm ci
 
-# Copy source code
+# Copy sisa source code
 COPY . .
 
 # Stage 2: Production stage
 FROM node:20-alpine
 
-# Install dumb-init untuk signal handling yang baik
+# Install dumb-init untuk signal handling
 RUN apk add --no-cache dumb-init
 
 WORKDIR /app
 
-# Copy dari builder stage
+# Copy package files & install HANYA production dependencies
+COPY package*.json ./
+RUN npm ci --only=production && npm cache clean --force
+
+# Copy source code dari builder
 COPY --from=builder --chown=node:node /app /app
 
 # Set environment variables
