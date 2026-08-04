@@ -3,7 +3,7 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Copy package files
+# Copy package files (hanya package.json dan package-lock.json jika ada)
 COPY package*.json ./
 
 # Install dependencies
